@@ -1,0 +1,481 @@
+{
+  "info": {
+    "name": "Library Book Management API",
+    "description": "One saved request per endpoint, including 400 and 404 cases. Start the server first (npm start). Variables: baseUrl, sampleId (a book from data/books.json), createdId (filled by request 06; in Thunder Client copy the id from the 06 response).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "sampleId",
+      "value": "2bfbbaa9-42d4-4850-bde3-dacda58d9734"
+    },
+    {
+      "key": "createdId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 GET all books",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Body has success:true and an array', function () { const b = pm.response.json(); pm.expect(b.success).to.eql(true); pm.expect(b.data).to.be.an('array'); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/books",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books"
+          ]
+        }
+      }
+    },
+    {
+      "name": "02 GET books: filter by genre + sort by year descending",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/books?genre=History&sort=-year",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books"
+          ],
+          "query": [
+            {
+              "key": "genre",
+              "value": "History"
+            },
+            {
+              "key": "sort",
+              "value": "-year"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "03 GET books: filter by author + available",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/books?author=abai&available=true",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books"
+          ],
+          "query": [
+            {
+              "key": "author",
+              "value": "abai"
+            },
+            {
+              "key": "available",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "04 GET one book by id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/books/{{sampleId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "{{sampleId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "05 GET stats (bonus)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Has total, available, byGenre', function () { const d = pm.response.json().data; pm.expect(d).to.have.all.keys('total', 'available', 'byGenre'); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/books/stats",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "stats"
+          ]
+        }
+      }
+    },
+    {
+      "name": "06 POST create a book",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set('createdId', pm.response.json().data.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"The Pragmatic Programmer\",\n  \"author\": \"Andrew Hunt\",\n  \"year\": 1999,\n  \"genre\": \"Technology\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/books",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books"
+          ]
+        }
+      }
+    },
+    {
+      "name": "07 POST create a book: INVALID (400)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });",
+              "pm.test('errors is a list', function () { pm.expect(pm.response.json().errors).to.be.an('array').that.is.not.empty; });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"A\",\n  \"author\": \"Andrew Hunt\",\n  \"year\": 1200\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/books",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books"
+          ]
+        }
+      }
+    },
+    {
+      "name": "08 PUT replace a book",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"The Pragmatic Programmer, 20th Anniversary Edition\",\n  \"author\": \"Andrew Hunt\",\n  \"year\": 2019,\n  \"genre\": \"Technology\",\n  \"available\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/books/{{createdId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "{{createdId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "09 PATCH update only available",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('available is false', function () { pm.expect(pm.response.json().data.available).to.eql(false); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"available\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/books/{{createdId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "{{createdId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "10 DELETE a book (204)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 204', function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/books/{{createdId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "{{createdId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "11 GET the deleted book (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+              "pm.test('error is Book not found', function () { pm.expect(pm.response.json().error).to.eql('Book not found'); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/books/{{createdId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "{{createdId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "12 GET unknown route (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/magazines",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "magazines"
+          ]
+        }
+      }
+    },
+    {
+      "name": "13 GET invalid sort value (400)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/books?sort=banana",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "books"
+          ],
+          "query": [
+            {
+              "key": "sort",
+              "value": "banana"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

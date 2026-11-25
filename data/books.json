@@ -1,0 +1,65 @@
+[
+  {
+    "id": "2bfbbaa9-42d4-4850-bde3-dacda58d9734",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "year": 1813,
+    "genre": "Fiction",
+    "available": true,
+    "createdAt": "2026-11-01T09:00:00.000Z"
+  },
+  {
+    "id": "526e6114-3356-4701-b80f-d200ac883024",
+    "title": "Nineteen Eighty-Four",
+    "author": "George Orwell",
+    "year": 1949,
+    "genre": "Fiction",
+    "available": true,
+    "createdAt": "2026-11-01T09:05:00.000Z"
+  },
+  {
+    "id": "4132c2fb-f7a9-4e18-8fd5-dab9614f78d6",
+    "title": "Collected Poems",
+    "author": "Abai Kunanbaiuly",
+    "year": 1909,
+    "genre": "Poetry",
+    "available": true,
+    "createdAt": "2026-11-01T09:10:00.000Z"
+  },
+  {
+    "id": "01e86129-b50e-4ddf-9229-53d6c1166fa7",
+    "title": "A Brief History of Time",
+    "author": "Stephen Hawking",
+    "year": 1988,
+    "genre": "Science",
+    "available": true,
+    "createdAt": "2026-11-01T09:15:00.000Z"
+  },
+  {
+    "id": "2eb29d1a-3340-4bfe-9ae8-f3b5db824cd8",
+    "title": "The Selfish Gene",
+    "author": "Richard Dawkins",
+    "year": 1976,
+    "genre": "Science",
+    "available": false,
+    "createdAt": "2026-11-01T09:20:00.000Z"
+  },
+  {
+    "id": "0e33c9f4-c969-4d20-992d-859d09507da5",
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "year": 1997,
+    "genre": "History",
+    "available": true,
+    "createdAt": "2026-11-01T09:25:00.000Z"
+  },
+  {
+    "id": "50896d35-b984-4bd4-bcb2-c420f42493a9",
+    "title": "Sapiens: A Brief History of Humankind",
+    "author": "Yuval Noah Harari",
+    "year": 2011,
+    "genre": "History",
+    "available": false,
+    "createdAt": "2026-11-01T09:30:00.000Z"
+  }
+]
