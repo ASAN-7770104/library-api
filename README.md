@@ -1,5 +1,7 @@
 # Library Book Management REST API
 
+**English** · [Русский](README.ru.md)
+
 **Name:** Assanali Tursumbayev  
 **Group:** Tursumbayev Assanali A2  
 **Course:** VR 113153 Web Development II, Homework Assignment 2
